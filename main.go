@@ -1,14 +1,15 @@
+package main
+
 import (
 	"fmt"
 	"log"
 	"net/http"
 )
 
-func greetingHandler(w http.ResponseWriter, r *httpRequest) {
-	if r.URL.Path != "/hello" {
-		http.Error(w, "404 not found", http.StatusNotFound) {
+func greetingHandler(w http.ResponseWriter, r *http.Request) {
+	if r.URL.Path != "/greeting" {
+		http.Error(w, "404 not found", http.StatusNotFound)
 			return
-		}
 	}
 
 	if r.Method != "GET" {
@@ -19,8 +20,8 @@ func greetingHandler(w http.ResponseWriter, r *httpRequest) {
 	fmt.Fprintf(w, "Hello, user!")
 }
 
-func formHandler(w http.ResponseWriter, r *httpRequest) {
-	if err := r.ParseForm() err != nil {
+func formHandler(w http.ResponseWriter, r *http.Request) {
+	if err := r.ParseForm(); err != nil {
 		fmt.Fprintf(w, "ParseForm() error: %v", err)
 		return
 	}
@@ -33,8 +34,6 @@ func formHandler(w http.ResponseWriter, r *httpRequest) {
 	fmt.Fprintf(w, "Name = %s\n", name)
 	fmt.Fprintf(w, "Address = %s\n", address)
 }
-
-/// -> TODO
 
 func main() {
 	fileServer := http.FileServer(http.Dir("./static"))
